@@ -1,0 +1,1 @@
+# OpenMP_Lab1
