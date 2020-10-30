@@ -45,10 +45,13 @@ do
 	
 	echo ""
 	export OMP_NUM_THREADS=4
+	echo "THREAD_NUMB = $OMP_NUM_THREADS" 
+        echo "==========THREAD_NUMB is $OMP_NUM_THREADS==========" >> lab1_data.txt
+
 	for method in STATIC DYNAMIC GUIDED
 	do
 		echo "==========METHOD is $method==========" >> lab1_data.txt
-		for chunk in 1 2 4 8 16 32 64 128
+		for chunk in 1 10 50 100
 		do
 			echo "==========CHUNK_SIZE is $chunk==========" >> lab1_data.txt
 			export OMP_SCHEDULE="$method,$chunk"
@@ -67,4 +70,27 @@ do
                 	python3 tester.py ./bin/collapse_3 >> lab1_data.txt
 		done
 	done
+
+	echo ""
+        export OMP_NUM_THREADS=4
+        echo "THREAD_NUMB = $OMP_NUM_THREADS"
+        echo "==========THREAD_NUMB is $OMP_NUM_THREADS==========" >> lab1_data.txt
+	
+	for method in STATIC DYNAMIC GUIDED
+        do
+                echo "==========METHOD is $method==========" >> lab1_data.txt
+                for chunk in 1000 100000 500000
+                do
+                        echo "==========CHUNK_SIZE is $chunk==========" >> lab1_data.txt
+                        export OMP_SCHEDULE="$method,$chunk"
+                        echo "METHOD is $OMP_SCHEDULE"
+                        echo "Calculating collapse_1"
+                        python3 tester.py ./bin/collapse_1 >> lab1_data.txt
+                        echo "Calculating collapse_2"
+                        python3 tester.py ./bin/collapse_2 >> lab1_data.txt
+                        echo "Calculating collapse_3"
+                        python3 tester.py ./bin/collapse_3 >> lab1_data.txt
+                done
+        done
+
 done
